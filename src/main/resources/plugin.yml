@@ -1,0 +1,8 @@
+name: Manhunt-Plugin
+version: '${project.version}'
+main: de.mayhan.challenge.Main
+api-version: 1.19
+commands:
+  timer:
+    usage: 'Usage: /timer <start|stop|pause|resume>'
+    permission: system.timer
