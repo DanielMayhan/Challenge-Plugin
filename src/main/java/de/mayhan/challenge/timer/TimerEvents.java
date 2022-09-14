@@ -37,16 +37,19 @@ public class TimerEvents implements Listener {
             Timer timer = TimerCommand.timers.get(1);
             if (event.getEntity() instanceof EnderDragon){
                 timer.pause();
+
+                Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage(ChatColor.RED + "========================================");
                 Bukkit.broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Challenge beendet nach: " + ChatColor.GREEN + Timer.getTime);
                 Bukkit.broadcastMessage(ChatColor.RED + "========================================");
+                Bukkit.broadcastMessage("");
 
                 for (Player p : Bukkit.getOnlinePlayers()){
                     p.setGameMode(GameMode.SPECTATOR);
 
                     Location loc = p.getLocation().clone();
                     Inventory inv = p.getInventory();
-                    
+
                     for (ItemStack item : inv.getContents()){
                         if (item != null){
                             loc.getWorld().dropItemNaturally(loc, item.clone());
