@@ -26,7 +26,7 @@ public class TimerEvents implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
 
-            if (!Timer.isrunning) {
+            if (!Timer.isRunning) {
                 event.setCancelled(true);
             }
         }

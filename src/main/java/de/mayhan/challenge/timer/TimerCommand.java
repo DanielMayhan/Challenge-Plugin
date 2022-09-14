@@ -27,7 +27,7 @@ public class TimerCommand implements TabExecutor {
         if (args.length == 1 && args[0].equalsIgnoreCase("start")){
 
             Timer timer = new Timer();
-            if (Timer.isrunning){
+            if (Timer.isRunning){
                 player.sendMessage(ChatColor.RED + "Timer läuft bereits!");
                 return true;
             }
@@ -39,7 +39,7 @@ public class TimerCommand implements TabExecutor {
             }
 
             timer.start(players);
-            Timer.isrunning = true;
+            Timer.isRunning = true;
             timers.put(1, timer);
 
             for (Player p : Bukkit.getOnlinePlayers()){
@@ -55,7 +55,7 @@ public class TimerCommand implements TabExecutor {
             Timer timer = timers.get(1);
             timers.remove(1);
             timer.stop();
-            Timer.isrunning = false;
+            Timer.isRunning = false;
             Bukkit.broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + "TIMER GESTOPPT!");
             return true;
         }
@@ -63,7 +63,7 @@ public class TimerCommand implements TabExecutor {
         if (args.length == 1 && args[0].equalsIgnoreCase("pause")){
             Timer timer = timers.get(1);
             timer.pause();
-            Timer.isrunning = false;
+            Timer.isRunning = false;
             Bukkit.broadcastMessage(ChatColor.RED + "Timer pausiert!");
             return true;
         }
@@ -71,7 +71,7 @@ public class TimerCommand implements TabExecutor {
         if (args.length == 1 && args[0].equalsIgnoreCase("resume")){
             Timer timer = timers.get(1);
             timer.resume();
-            Timer.isrunning = true;
+            Timer.isRunning = true;
             Bukkit.broadcastMessage(ChatColor.RED + "Timer fortgesetzt!");
             return true;
         }

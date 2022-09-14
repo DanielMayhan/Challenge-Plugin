@@ -67,6 +67,6 @@ public class Timer {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
     }
 
-    public static boolean isrunning = false;
+    public static boolean isRunning = false;
 
 }
