@@ -43,9 +43,7 @@ public final class Main extends JavaPlugin {
 
 
 /*
-Added since last update (v1.0):
+Added since last update (v1.1):
 
-- added BlockBreakEvent when timer isn't started
-- added time set 0 on start
-- added Player Join / Quit messages
+
  */
