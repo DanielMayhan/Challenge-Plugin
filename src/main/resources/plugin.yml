@@ -6,3 +6,6 @@ commands:
   timer:
     usage: 'Usage: /timer <start|stop|pause|resume>'
     permission: system.timer
+  reset:
+    usage: 'Usage: /reset'
+    permission: system.reset

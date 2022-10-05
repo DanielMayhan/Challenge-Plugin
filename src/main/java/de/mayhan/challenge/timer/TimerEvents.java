@@ -10,6 +10,7 @@ import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -22,21 +23,21 @@ public class TimerEvents implements Listener {
 
 
     @EventHandler(ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player player = (Player) e.getEntity();
 
             if (!Timer.isRunning) {
-                event.setCancelled(true);
+                e.setCancelled(true);
             }
         }
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onEntityDeath(EntityDeathEvent event) {
+    public void onEntityDeath(EntityDeathEvent e) {
         if (!TimerCommand.timers.isEmpty()) {
             Timer timer = TimerCommand.timers.get(1);
-            if (event.getEntity() instanceof EnderDragon){
+            if (e.getEntity() instanceof EnderDragon) {
                 timer.pause();
 
                 Bukkit.broadcastMessage("");
@@ -45,14 +46,14 @@ public class TimerEvents implements Listener {
                 Bukkit.broadcastMessage(ChatColor.RED + "========================================");
                 Bukkit.broadcastMessage("");
 
-                for (Player p : Bukkit.getOnlinePlayers()){
+                for (Player p : Bukkit.getOnlinePlayers()) {
                     p.setGameMode(GameMode.SPECTATOR);
 
                     Location loc = p.getLocation().clone();
                     Inventory inv = p.getInventory();
 
-                    for (ItemStack item : inv.getContents()){
-                        if (item != null){
+                    for (ItemStack item : inv.getContents()) {
+                        if (item != null) {
                             loc.getWorld().dropItemNaturally(loc, item.clone());
                         }
                     }
@@ -64,7 +65,7 @@ public class TimerEvents implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDeath(PlayerDeathEvent e) {
-        if (!TimerCommand.timers.isEmpty()){
+        if (!TimerCommand.timers.isEmpty()) {
             Timer timer = TimerCommand.timers.get(1);
             timer.pause();
 
@@ -88,6 +89,14 @@ public class TimerEvents implements Listener {
                 }
                 inv.clear();
             }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockBreak(BlockBreakEvent e) {
+        Player player = e.getPlayer();
+        if (!Timer.isRunning){
+            e.setCancelled(true);
         }
     }
 

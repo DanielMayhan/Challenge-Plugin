@@ -68,5 +68,4 @@ public class Timer {
     }
 
     public static boolean isRunning = false;
-
 }

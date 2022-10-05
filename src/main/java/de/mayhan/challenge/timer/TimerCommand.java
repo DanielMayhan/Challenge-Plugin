@@ -36,6 +36,8 @@ public class TimerCommand implements TabExecutor {
             List<Player> players = new ArrayList<>();
             for (Player p : Bukkit.getOnlinePlayers()){
                 players.add(p);
+                p.setHealth(20.0);
+                p.setFoodLevel(20);
             }
 
             timer.start(players);
@@ -46,6 +48,9 @@ public class TimerCommand implements TabExecutor {
                 Location l = p.getLocation();
                 p.playSound(p, Sound.ENTITY_ENDER_DRAGON_GROWL, 5, 0);
             }
+
+            World w = player.getWorld();
+            w.setTime(0);
 
             Bukkit.broadcastMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "TIMER GESTARTED!");
             return true;
