@@ -86,7 +86,13 @@ public class TimerCommand implements TabExecutor {
 
         if (args.length == 1 && args[0].equalsIgnoreCase("resume")){
             Timer timer = timers.get(1);
-            timer.resume();
+
+            ArrayList<Player> players = new ArrayList<>();
+            for (Player p : Bukkit.getOnlinePlayers()){
+                players.add(p);
+            }
+
+            timer.resume(players);
             Timer.isRunning = true;
             Bukkit.broadcastMessage(ChatColor.GREEN + "Timer fortgesetzt!");
             return true;

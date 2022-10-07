@@ -23,12 +23,18 @@ public class PlayerConnectionEvent implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent e) {
+        Player player = e.getPlayer();
 
         if (!config.getBoolean("custom-messages")){
             return;
         }
+        if (config.get("custom-motd") == null){
+            player.sendMessage(ChatColor.GOLD + "Welcome to the Server!");
+        } else {
+            player.sendMessage(config.getString("custom-motd"));
+        }
 
-        Player player = e.getPlayer();
+
         e.setJoinMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "] " + ChatColor.GREEN + player.getName() + ChatColor.WHITE + " joined.");
     }
 

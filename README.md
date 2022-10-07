@@ -2,6 +2,10 @@
 
 # Change-Log
 
+v1.3
+- added Timer resume fix
+- added custom motd
+
 v1.2
 - Freeze-System
 - added config.yml + functions

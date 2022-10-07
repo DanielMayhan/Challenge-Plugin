@@ -15,3 +15,9 @@ heal-on-start: true
 
 #Timer set 0 on start. 0 - 24000
 time-set-on-start: 0
+
+#Enable custom motd. Must be specified down below
+enable-motd: false
+
+#Set a motd when a player joins the server standard: "Welcome to the Server!"
+custom-motd:
