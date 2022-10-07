@@ -59,11 +59,8 @@ public class Timer {
     public void pause(){
         this.paused = true;
     }
-    public void resume(List<Player> players){
+    public void resume(){
         this.paused = false;
-        for (Player p : players){
-            sendActionbar(p, getTime.toString());
-        }
     }
 
     private void sendActionbar(Player player, String message) {

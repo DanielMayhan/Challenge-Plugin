@@ -15,13 +15,6 @@ import java.util.List;
 
 public class TimerCommand implements TabExecutor {
 
-    private Main main;
-
-    public TimerCommand(Main main) {
-        this.main = main;
-    }
-    private Configuration config = main.getConfig();
-
     public static HashMap<Integer, Timer> timers = Maps.newHashMap();
 
     @Override
@@ -45,10 +38,8 @@ public class TimerCommand implements TabExecutor {
             List<Player> players = new ArrayList<>();
             for (Player p : Bukkit.getOnlinePlayers()){
                 players.add(p);
-                if (config.getBoolean("heal-on-start")){
-                    player.setHealth(20.0);
-                    player.setFoodLevel(20);
-                }
+                player.setHealth(20.0);
+                player.setFoodLevel(20);
             }
 
             timer.start(players);
@@ -61,7 +52,7 @@ public class TimerCommand implements TabExecutor {
             }
 
             World w = player.getWorld();
-            w.setTime(config.getInt("time-set-on-start"));
+            w.setTime(0);
 
             Bukkit.broadcastMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "TIMER GESTARTED!");
             return true;
@@ -87,12 +78,7 @@ public class TimerCommand implements TabExecutor {
         if (args.length == 1 && args[0].equalsIgnoreCase("resume")){
             Timer timer = timers.get(1);
 
-            ArrayList<Player> players = new ArrayList<>();
-            for (Player p : Bukkit.getOnlinePlayers()){
-                players.add(p);
-            }
-
-            timer.resume(players);
+            timer.resume();
             Timer.isRunning = true;
             Bukkit.broadcastMessage(ChatColor.GREEN + "Timer fortgesetzt!");
             return true;

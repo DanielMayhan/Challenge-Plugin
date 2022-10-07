@@ -14,13 +14,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
+
+
     private static final PluginManager pluginManager = Bukkit.getServer().getPluginManager();
 
     public static boolean isfreezed;
 
     @Override
     public void onEnable() {
-
         loadConfig();
         freezeSystem();
         system();
@@ -31,27 +32,28 @@ public final class Main extends JavaPlugin {
 
     }
 
+    private void loadConfig() {
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+    }
+
     @Override
     public void onDisable() {
 
     }
     public void system(){
-        pluginManager.registerEvents(new PlayerConnectionEvent(this), this);
+        pluginManager.registerEvents(new PlayerConnectionEvent(), this);
     }
     public void timer(){
         pluginManager.registerEvents(new TimerEvents(this), this);
-        getCommand("timer").setExecutor(new TimerCommand(this));
+        getCommand("timer").setExecutor(new TimerCommand());
         }
 
     public void freezeSystem() {
         pluginManager.registerEvents(new FreezeListener(), this);
         getCommand("freeze").setExecutor(new FreezeCommand());
         getCommand("unfreeze").setExecutor(new UnFreezeCommand());
-    }
-
-    public void loadConfig(){
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
+        isfreezed = getConfig().getBoolean("freeze-on-start");
     }
 }
 

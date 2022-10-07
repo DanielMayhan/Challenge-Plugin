@@ -18,15 +18,16 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class TimerEvents implements Listener{
 
-    private Main main;
-    public TimerEvents(Main main) {
-        this.main = main;
-    }
+    private final Plugin plugin;
 
-    private final Configuration config = main.getConfig();
+    public TimerEvents(JavaPlugin plugin){
+        this.plugin = plugin;
+    }
 
     @EventHandler(ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
@@ -75,13 +76,13 @@ public class TimerEvents implements Listener{
         if (TimerCommand.timers.isEmpty()){
             return;
         }
-        if (config.getBoolean("team-death")){
+        if (plugin.getConfig().getBoolean("team-death")){
             Timer timer = TimerCommand.timers.get(1);
             timer.pause();
 
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(ChatColor.RED + "========================================");
-            Bukkit.broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Challenge beendet, weil " + ChatColor.GREEN + player.getDisplayName() + ChatColor.RED + ChatColor.BOLD.toString() + " gestorben ist!");
+            Bukkit.broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Challenge beendet, weil " + ChatColor.GREEN + player.getDisplayName() + ChatColor.RED + ChatColor.BOLD + " gestorben ist!");
             Bukkit.broadcastMessage(ChatColor.RED + "Zeit: " + Timer.getTime);
             Bukkit.broadcastMessage(ChatColor.RED + "========================================");
             Bukkit.broadcastMessage("");
@@ -112,4 +113,7 @@ public class TimerEvents implements Listener{
     }
 
 
+    public Plugin getPlugin() {
+        return plugin;
+    }
 }
