@@ -4,8 +4,20 @@ main: de.mayhan.challenge.Main
 api-version: 1.19
 commands:
   timer:
-    usage: 'Usage: /timer <start|stop|pause|resume>'
+    usage: 'Usage: /timer <start | stop | pause | resume>'
+    description: 'The Timer: Use /timer <start | stop | pause | resume>'
     permission: system.timer
-  reset:
-    usage: 'Usage: /reset'
-    permission: system.reset
+
+  freeze:
+    usage: 'Usage: /freeze - /fz'
+    aliases:
+      - 'fz'
+    description: 'Freezes every player that inst Server-Operator.'
+    permission: system.freeze
+
+  unfreeze:
+    usage: 'Ussage: /unfreeze - /ufz'
+    aliases:
+      - 'ufz'
+    description: 'Unfreezes every player.'
+    permission: system.freeze

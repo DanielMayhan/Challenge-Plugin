@@ -1,10 +1,12 @@
 package de.mayhan.challenge.timer;
 
 import com.google.common.collect.Maps;
+import de.mayhan.challenge.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -12,6 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TimerCommand implements TabExecutor {
+
+    private Main main;
+
+    public TimerCommand(Main main) {
+        this.main = main;
+    }
+    private Configuration config = main.getConfig();
 
     public static HashMap<Integer, Timer> timers = Maps.newHashMap();
 
@@ -36,8 +45,10 @@ public class TimerCommand implements TabExecutor {
             List<Player> players = new ArrayList<>();
             for (Player p : Bukkit.getOnlinePlayers()){
                 players.add(p);
-                p.setHealth(20.0);
-                p.setFoodLevel(20);
+                if (config.getBoolean("heal-on-start")){
+                    player.setHealth(20.0);
+                    player.setFoodLevel(20);
+                }
             }
 
             timer.start(players);
@@ -50,7 +61,7 @@ public class TimerCommand implements TabExecutor {
             }
 
             World w = player.getWorld();
-            w.setTime(0);
+            w.setTime(config.getInt("time-set-on-start"));
 
             Bukkit.broadcastMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "TIMER GESTARTED!");
             return true;
@@ -69,7 +80,7 @@ public class TimerCommand implements TabExecutor {
             Timer timer = timers.get(1);
             timer.pause();
             Timer.isRunning = false;
-            Bukkit.broadcastMessage(ChatColor.RED + "Timer pausiert!");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Timer pausiert!");
             return true;
         }
 
@@ -77,12 +88,9 @@ public class TimerCommand implements TabExecutor {
             Timer timer = timers.get(1);
             timer.resume();
             Timer.isRunning = true;
-            Bukkit.broadcastMessage(ChatColor.RED + "Timer fortgesetzt!");
+            Bukkit.broadcastMessage(ChatColor.GREEN + "Timer fortgesetzt!");
             return true;
         }
-
-        player.sendMessage("Usage: /timer <start|stop|pause|resume>");
-
         return false;
     }
 

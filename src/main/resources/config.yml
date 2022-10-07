@@ -1,0 +1,17 @@
+# Welcome to the Manhunt-Plugin developed by Mayhan
+# This is the Configuration-File here u can change some Stuff
+
+#Should all Players that are not  Operator be freezed on Startup.
+freeze-on-start: true
+
+#Should everyone die when one person dies.
+team-death: true
+
+#Should the plugin use custom Join- / Quit messages.
+custom-messages: true
+
+#Should all players be healed on start
+heal-on-start: true
+
+#Timer set 0 on start. 0 - 24000
+time-set-on-start: 0

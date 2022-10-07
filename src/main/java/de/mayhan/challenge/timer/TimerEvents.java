@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,10 +19,14 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
+public class TimerEvents implements Listener{
 
-public class TimerEvents implements Listener {
+    private Main main;
+    public TimerEvents(Main main) {
+        this.main = main;
+    }
 
+    private final Configuration config = main.getConfig();
 
     @EventHandler(ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent e) {
@@ -65,14 +71,18 @@ public class TimerEvents implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDeath(PlayerDeathEvent e) {
-        if (!TimerCommand.timers.isEmpty()) {
+        Player player = e.getEntity();
+        if (TimerCommand.timers.isEmpty()){
+            return;
+        }
+        if (config.getBoolean("team-death")){
             Timer timer = TimerCommand.timers.get(1);
             timer.pause();
 
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(ChatColor.RED + "========================================");
-            Bukkit.broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Challenge beendet nach: " + ChatColor.GREEN + Timer.getTime);
-            Bukkit.broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + ",weil " + ChatColor.RESET + ChatColor.WHITE + e.getEntity().getName() + ChatColor.RED + ChatColor.BOLD.toString() + " gestorben ist!");
+            Bukkit.broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Challenge beendet, weil " + ChatColor.GREEN + player.getDisplayName() + ChatColor.RED + ChatColor.BOLD.toString() + " gestorben ist!");
+            Bukkit.broadcastMessage(ChatColor.RED + "Zeit: " + Timer.getTime);
             Bukkit.broadcastMessage(ChatColor.RED + "========================================");
             Bukkit.broadcastMessage("");
 
@@ -91,6 +101,7 @@ public class TimerEvents implements Listener {
             }
         }
     }
+
 
     @EventHandler(ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent e) {
